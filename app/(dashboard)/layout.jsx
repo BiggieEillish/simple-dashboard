@@ -1,3 +1,4 @@
+"use client"; 
 import Link from 'next/link';
 import {
   Home,
@@ -31,6 +32,8 @@ import { PokeballLogo } from '@/components/icons';
 import Providers from './providers';
 import NavItem  from './nav-item';
 import { SearchInput } from './search';
+import { SheetHeader, SheetTitle } from '@/components/ui/sheet'
+import React from 'react';
 
 export default function DashboardLayout({ children }) {
   return (
@@ -105,63 +108,54 @@ function DesktopNav() {
 }
 
 function MobileNav() {
+  const [isOpen, setIsOpen] = React.useState(false); // State to manage sidebar open/close
+
+  const handleLinkClick = () => {
+    setIsOpen(false); // Close sidebar when a link is clicked
+  };
+
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button size="icon" variant="outline" className="sm:hidden">
+        <Button size="icon" variant="outline" className="block sm:hidden">
           <PanelLeft className="h-5 w-5" />
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="sm:max-w-xs">
+      <SheetContent
+        side="left"
+        className="w-[90%] max-w-sm sm:max-w-xs z-50 overflow-y-auto"
+      >
+        <SheetHeader>
+          <SheetTitle>Menu</SheetTitle>
+        </SheetHeader>
         <nav className="grid gap-6 text-lg font-medium">
-          <Link
-            href="#"
-            className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-          >
-            <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-            <span className="sr-only">Vercel</span>
-          </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
+          <Link href="/" className="flex items-center gap-4 px-4" onClick={handleLinkClick}>
             <Home className="h-5 w-5" />
             Dashboard
           </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
+          <Link href="/orders" className="flex items-center gap-4 px-4" onClick={handleLinkClick}>
             <ShoppingCart className="h-5 w-5" />
             Orders
           </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-4 px-2.5 text-foreground"
-          >
+          <Link href="/products" className="flex items-center gap-4 px-4" onClick={handleLinkClick}>
             <Package className="h-5 w-5" />
             Products
           </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
-            <Users2 className="h-5 w-5" />
+          <Link href="/customers" className="flex items-center gap-4 px-4" onClick={handleLinkClick}>
+            <Package2 className="h-5 w-5" />
             Customers
           </Link>
-          <Link
-            href="#"
-            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-          >
+          <Link href="/analytics" className="flex items-center gap-4 px-4" onClick={handleLinkClick}>
             <LineChart className="h-5 w-5" />
-            Settings
+            Analytics
           </Link>
         </nav>
       </SheetContent>
     </Sheet>
   );
 }
+
 
 function DashboardBreadcrumb() {
   return (

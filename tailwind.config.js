@@ -11,6 +11,12 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      animation: {
+        'fade-in-0': 'fadeIn 0.5s ease-in-out',
+        'fade-out-0': 'fadeOut 0.5s ease-in-out',
+        'slide-in-from-left': 'slideInLeft 0.3s ease-in-out',
+        'slide-out-to-left': 'slideOutLeft 0.3s ease-in-out',
+      },
     },
   },
   plugins: [],
